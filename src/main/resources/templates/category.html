@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Category</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+    <header>
+      <h1 th:text = "'Category: ' + ${category.name}"></h1>
+      <h2>Still, Amazon's Top Competitor... </h2>
+    </header>
+    
+    <main>
+      <h2>Products:</h2>
+      <div th:each = "product:${category.products}">
+        <a th:href = "@{/product(id=${product.id})}"
+        th:text = "${product.name}"></a>
+      </div>
+
+    </main>
+  
+</body>
+</html>
