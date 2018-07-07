@@ -26,6 +26,12 @@
         	No Category
 		</div>
       </div>
+      
+      <form method="POST" th:action="@{/addItemToCart}">
+      	Quantity: <input type="number" name="qty">
+      	<input type="hidden" th:value="${product.id}" name="id">
+      	<input type="Submit" value="Add to Cart">
+      </form>
 
     </main>
   

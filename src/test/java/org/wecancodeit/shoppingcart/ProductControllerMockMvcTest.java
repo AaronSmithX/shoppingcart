@@ -3,6 +3,7 @@ package org.wecancodeit.shoppingcart;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -81,5 +82,12 @@ public class ProductControllerMockMvcTest {
 		when(productRepo.findById(arbitraryProductId)).thenReturn(Optional.of(product));
 		mvc.perform(get("/product?id=9001")).andExpect(status().isOk());
 	}
+	
+	@Test
+	public void shouldAddItemToCart() throws Exception {
+		mvc.perform(post("/addItemToCart?id=1&qty=2")).andExpect(status().isOk());
+	}
+	
+	
 	
 }

@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -14,9 +15,15 @@ public class ProductController {
 
 	@Resource
 	CategoryRepository categoryRepo;
-	
+
 	@Resource
 	ProductRepository productRepo;
+
+	@Resource
+	StatusRepository statusRepo;
+
+	@Resource
+	CartItemRepository cartRepo;
 	
 	@RequestMapping("/")
 	public String homePage() {
@@ -42,6 +49,23 @@ public class ProductController {
 			model.addAttribute("product", product.get());
 			return "product";
 		}
+		throw new ProductNotFoundException();
+	}
+	
+	@PostMapping("/addItemToCart")
+	public String addItemToCart(
+			@RequestParam(value="id")Long productId,
+			@RequestParam(value= "qty")int qty
+	) throws ProductNotFoundException {
+		
+		Optional<Product> product = productRepo.findById(productId);
+		
+		if (product.isPresent()) {
+			Status justAdded = statusRepo.save(new Status("Just Added"));
+			cartRepo.save(new CartItem(product.get(), qty, justAdded));
+			return "index";
+		}
+		
 		throw new ProductNotFoundException();
 	}
 }

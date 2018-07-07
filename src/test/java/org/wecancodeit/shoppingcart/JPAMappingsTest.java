@@ -18,42 +18,48 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
 public class JPAMappingsTest {
-	
+
 	@Resource
 	private ProductRepository productRepo;
-	
+
 	@Resource
 	private CategoryRepository categoryRepo;
+
+	@Resource
+	private StatusRepository statusRepo;
 	
 	@Resource
+	private CartItemRepository cartRepo;
+
+	@Resource
 	private EntityManager entityManager;
-	
+
 	@Test
 	public void shouldSaveAndLoadProduct() {
 		Product product = productRepo.save(new Product("Widget"));
 		long productId = product.getId();
-		
+
 		entityManager.flush();
 		entityManager.clear();
-		
+
 		Optional<Product> result = productRepo.findById(productId);
 		Product resultProduct = result.get();
 		assertThat(resultProduct.getName(), is("Widget"));
 	}
-	
+
 	@Test
 	public void shouldSaveAndLoadCategory() {
 		Category category = categoryRepo.save(new Category("Gadgets"));
 		long categoryId = category.getId();
-		
+
 		entityManager.flush();
 		entityManager.clear();
-		
+
 		Optional<Category> result = categoryRepo.findById(categoryId);
 		Category resultCategory = result.get();
 		assertThat(resultCategory.getName(), is("Gadgets"));
 	}
-	
+
 	@Test
 	public void shouldEstablishProductCategoryRelationship() {
 		Category category = categoryRepo.save(new Category("Gadgets"));
@@ -62,10 +68,10 @@ public class JPAMappingsTest {
 		long categoryId = category.getId();
 		long productId1 = product1.getId();
 		long productId2 = product2.getId();
-		
+
 		entityManager.flush();
 		entityManager.clear();
-		
+
 		Optional<Category> categoryOptional = categoryRepo.findById(categoryId);
 		Optional<Product> productOptional1 = productRepo.findById(productId1);
 		Optional<Product> productOptional2 = productRepo.findById(productId2);
@@ -73,8 +79,45 @@ public class JPAMappingsTest {
 		Product resultProduct1 = productOptional1.get();
 		Product resultProduct2 = productOptional2.get();
 		assertThat(resultProduct1.getCategory().getName(), is("Gadgets"));
-		assertThat(resultCategory.getProducts(),
-				containsInAnyOrder(resultProduct1, resultProduct2));
+		assertThat(resultCategory.getProducts(), containsInAnyOrder(resultProduct1, resultProduct2));
 	}
-	
+
+	@Test
+	public void shouldSaveAndLoadStatuses() {
+		Status status = statusRepo.save(new Status("WIP"));
+		long statusId = status.getId();
+
+		entityManager.flush();
+		entityManager.clear();
+
+		Optional<Status> statusOptional = statusRepo.findById(statusId);
+		Status resultStatus = statusOptional.get();
+		assertThat(resultStatus.getName(), is("WIP"));
+
+	}
+
+	@Test
+	public void shouldSaveAndLoadCartWithStatus() {
+		
+		Product product = productRepo.save(new Product("Widget"));
+		
+		Status statusWip = statusRepo.save(new Status("WIP"));
+		long statusId = statusWip.getId();
+		
+		CartItem cart = cartRepo.save(new CartItem(product, 6, statusWip));
+		long cartItemId = cart.getId();
+
+		entityManager.flush();
+		entityManager.clear();
+
+		Optional<CartItem> cartItemOptional = cartRepo.findById(cartItemId);
+		CartItem resultCartItem = cartItemOptional.get();
+		
+		Optional<Status> statusOptional = statusRepo.findById(statusId);
+		Status resultStatus = statusOptional.get();
+
+		assertThat(resultCartItem.getProduct().getName(), is("Widget"));
+		assertThat(resultCartItem.getStatus().getName(), is("WIP"));
+		assertThat(resultStatus.getName(), is("WIP"));
+	}
 }
