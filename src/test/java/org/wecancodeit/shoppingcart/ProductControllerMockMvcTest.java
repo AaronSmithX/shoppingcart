@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -28,10 +29,17 @@ public class ProductControllerMockMvcTest {
 	@MockBean
 	private CategoryRepository categoryRepo;
 	
+	@MockBean
+	private ProductRepository productRepo;
+	
 	// Mock Stuff
 	@Mock
 	private Category category;
 	
+	@Mock
+	private Product product;
+	
+
 	
 	
 	// home
@@ -60,6 +68,18 @@ public class ProductControllerMockMvcTest {
 		mvc.perform(get("/category?id=1")).andExpect(status().isOk());
 	}
 	
+	@Test
+	public void shouldRouteToSingleProduct() throws Exception { 
+		long arbritraryProductId = 9001;
+		when(productRepo.findById(arbritraryProductId)).thenReturn(Optional.of(product));
+		mvc.perform(get("/product?id=9001")).andExpect(view().name(is("product")));
+	}
 	
+	@Test
+	public void shouldBeOKForProduct() throws Exception {
+		long arbitraryProductId = 9001;
+		when(productRepo.findById(arbitraryProductId)).thenReturn(Optional.of(product));
+		mvc.perform(get("/product?id=9001")).andExpect(status().isOk());
+	}
 	
 }

@@ -40,7 +40,7 @@ public class Product {
 	
 	public Product(String name, Category category) {
 		this.name = name;
-		this.category = category;
+		this.setCategory(category);
 	}
 
 	@Override
@@ -63,6 +63,10 @@ public class Product {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 }

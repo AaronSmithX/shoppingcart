@@ -15,6 +15,9 @@ public class ProductController {
 	@Resource
 	CategoryRepository categoryRepo;
 	
+	@Resource
+	ProductRepository productRepo;
+	
 	@RequestMapping("/")
 	public String homePage() {
 		return "index";
@@ -29,5 +32,16 @@ public class ProductController {
 			return "category";
 		}
 		throw new CategoryNotFoundException();
+	}
+	
+	@RequestMapping("/product") 
+	public String findOneProduct(@RequestParam(value="id")Long productId, Model model) throws ProductNotFoundException {
+		Optional<Product> product = productRepo.findById(productId);
+		
+		if(product.isPresent()) {
+			model.addAttribute("product", product.get());
+			return "product";
+		}
+		throw new ProductNotFoundException();
 	}
 }
