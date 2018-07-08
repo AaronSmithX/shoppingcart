@@ -14,9 +14,6 @@ public class ShoppingCartPopulator implements CommandLineRunner{
 	@Resource
 	private CategoryRepository categoryRepo;
 
-	@Resource
-	private StatusRepository statusRepo;
-	
 	@Override
 	public void run(String... args) throws Exception {
 		Category gadgets = categoryRepo.save(new Category("Gadgets"));
@@ -25,10 +22,6 @@ public class ShoppingCartPopulator implements CommandLineRunner{
 		Product widget = productRepo.save(new Product("Widget", gadgets));
 		Product stick = productRepo.save(new Product("Stick", nature));
 		Product leaf = productRepo.save(new Product("Leaf", nature));
-
-		Status wip = statusRepo.save(new Status("WIP"));
-		Status processing = statusRepo.save(new Status("Processing"));
-		Status invoice= statusRepo.save(new Status("Invoice"));
 	}
 
 }

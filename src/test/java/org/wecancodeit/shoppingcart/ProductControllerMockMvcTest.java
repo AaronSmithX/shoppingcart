@@ -20,18 +20,31 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+/*
+ * NOTE: Whatever class is being tested here [visible in @WebMvcTest(_____.class)]
+ * NEEDS to have all of its dependencies provided as @MockBean in the Test class.
+ * 
+ * In this case, ProductController has 3 @Resource member variables.
+ * Thus, those 3 member variables must appear here as @MockBean member variables
+ * EVEN IF they are not used directly.
+ */
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(ProductController.class)
 public class ProductControllerMockMvcTest {
+	
 	// Setup
 	@Resource
 	private MockMvc mvc;
 	
 	@MockBean
 	private CategoryRepository categoryRepo;
-	
+
 	@MockBean
 	private ProductRepository productRepo;
+
+	@MockBean
+	private CartItemRepository cartRepo;
 	
 	// Mock Stuff
 	@Mock
@@ -43,7 +56,7 @@ public class ProductControllerMockMvcTest {
 
 	
 	
-	// home
+	// Home
 	@Test
 	public void shouldRouteToHome() throws Exception{
 		mvc.perform(get("/")).andExpect(view().name(is("index")));

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +19,6 @@ public class ProductController {
 
 	@Resource
 	ProductRepository productRepo;
-
-	@Resource
-	StatusRepository statusRepo;
 
 	@Resource
 	CartItemRepository cartRepo;
@@ -61,8 +59,7 @@ public class ProductController {
 		Optional<Product> product = productRepo.findById(productId);
 		
 		if (product.isPresent()) {
-			Status justAdded = statusRepo.save(new Status("Just Added"));
-			cartRepo.save(new CartItem(product.get(), qty, justAdded));
+			cartRepo.save(new CartItem(product.get(), qty, Status.WIP));
 			return "index";
 		}
 		

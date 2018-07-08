@@ -26,9 +26,6 @@ public class JPAMappingsTest {
 	private CategoryRepository categoryRepo;
 
 	@Resource
-	private StatusRepository statusRepo;
-	
-	@Resource
 	private CartItemRepository cartRepo;
 
 	@Resource
@@ -83,28 +80,11 @@ public class JPAMappingsTest {
 	}
 
 	@Test
-	public void shouldSaveAndLoadStatuses() {
-		Status status = statusRepo.save(new Status("WIP"));
-		long statusId = status.getId();
-
-		entityManager.flush();
-		entityManager.clear();
-
-		Optional<Status> statusOptional = statusRepo.findById(statusId);
-		Status resultStatus = statusOptional.get();
-		assertThat(resultStatus.getName(), is("WIP"));
-
-	}
-
-	@Test
 	public void shouldSaveAndLoadCartWithStatus() {
 		
 		Product product = productRepo.save(new Product("Widget"));
-		
-		Status statusWip = statusRepo.save(new Status("WIP"));
-		long statusId = statusWip.getId();
-		
-		CartItem cart = cartRepo.save(new CartItem(product, 6, statusWip));
+				
+		CartItem cart = cartRepo.save(new CartItem(product, 6, Status.WIP));
 		long cartItemId = cart.getId();
 
 		entityManager.flush();
@@ -113,11 +93,7 @@ public class JPAMappingsTest {
 		Optional<CartItem> cartItemOptional = cartRepo.findById(cartItemId);
 		CartItem resultCartItem = cartItemOptional.get();
 		
-		Optional<Status> statusOptional = statusRepo.findById(statusId);
-		Status resultStatus = statusOptional.get();
-
 		assertThat(resultCartItem.getProduct().getName(), is("Widget"));
-		assertThat(resultCartItem.getStatus().getName(), is("WIP"));
-		assertThat(resultStatus.getName(), is("WIP"));
+		assertThat(resultCartItem.getStatus(), is(Status.WIP));
 	}
 }

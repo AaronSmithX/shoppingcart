@@ -1,12 +1,11 @@
 package org.wecancodeit.shoppingcart;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import org.junit.runners.ParentRunner;
-import org.junit.runners.model.FrameworkMethod;
 
 @Entity
 public class CartItem {
@@ -15,7 +14,7 @@ public class CartItem {
 	@GeneratedValue
 	private long id;
 	
-	@ManyToOne
+	@Enumerated(EnumType.STRING)
 	private Status status;
 	
 	@ManyToOne
