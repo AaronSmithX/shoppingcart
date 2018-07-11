@@ -58,8 +58,8 @@ public class ProductControllerMockMvcTest {
 	
 	// Home
 	@Test
-	public void shouldRouteToHome() throws Exception{
-		mvc.perform(get("/")).andExpect(view().name(is("index")));
+	public void shouldRouteToHomeCategories() throws Exception{
+		mvc.perform(get("/")).andExpect(view().name(is("categories")));
 	}
 	
 	@Test
@@ -107,7 +107,7 @@ public class ProductControllerMockMvcTest {
 	// Cart
 	@Test
 	public void shouldRouteToCart() throws Exception{
-		mvc.perform(get("/")).andExpect(view().name(is("index")));
+		mvc.perform(get("/cart")).andExpect(view().name(is("cart")));
 	}
 	
 	@Test
