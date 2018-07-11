@@ -63,13 +63,13 @@ public class ProductControllerMockMvcTest {
 	}
 	
 	@Test
-	public void shouldBeOkForHome() throws Exception{
+	public void shouldBeOkForHome() throws Exception {
 	mvc.perform(get("/")).andExpect(status().isOk());
 	}
 	
 	// Categories
 	@Test
-	public void shouldRouteToSingleCategory() throws Exception{
+	public void shouldRouteToSingleCategory() throws Exception {
 		long arbitraryCategoryId = 1L;
 		when(categoryRepo.findById(arbitraryCategoryId)).thenReturn(Optional.of(category));
 		mvc.perform(get("/category?id=1")).andExpect(view().name(is("category")));
@@ -98,6 +98,8 @@ public class ProductControllerMockMvcTest {
 	
 	@Test
 	public void shouldAddItemToCart() throws Exception {
+		long arbitraryProductId = 1;
+		when(productRepo.findById(arbitraryProductId)).thenReturn(Optional.of(product));
 		mvc.perform(post("/addItemToCart?id=1&qty=2")).andExpect(status().isOk());
 	}
 	

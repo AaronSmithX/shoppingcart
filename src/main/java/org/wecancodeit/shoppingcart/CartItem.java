@@ -20,16 +20,15 @@ public class CartItem {
 	@ManyToOne
 	private Product product;
 	
-	private int qty;
-	
+	private int quantity;
 
 	protected CartItem() {
 
 	}
 
-	public CartItem(Product product, int qty, Status status) {
+	public CartItem(Product product, int quantity, Status status) {
 		this.product = product;
-		this.qty = qty;
+		this.quantity = quantity;
 		this.status = status;
 	}
 
@@ -45,6 +44,12 @@ public class CartItem {
 		return status;
 	}
 
+	public int getQuantity() {
+		return quantity;
+	}
 
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
 }
