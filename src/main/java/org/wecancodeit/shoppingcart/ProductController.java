@@ -1,15 +1,16 @@
 package org.wecancodeit.shoppingcart;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class ProductController {
@@ -22,10 +23,17 @@ public class ProductController {
 
 	@Resource
 	CartItemRepository cartRepo;
-	
+
 	@RequestMapping("/")
-	public String homePage() {
-		return "index";
+	public String homePage(Model model) {
+		Iterable<Category> categories = categoryRepo.findAll();
+		model.addAttribute("categories", categories);
+		return "categories";
+	}
+
+	@RequestMapping("/cart")
+	public String shoppingCart() {
+		return "cart";
 	}
 	
 	@RequestMapping("/category") 
@@ -51,16 +59,19 @@ public class ProductController {
 	}
 	
 	@PostMapping("/addItemToCart")
-	public String addItemToCart(
-			@RequestParam(value="id")Long productId,
-			@RequestParam(value= "qty")int qty
+	public RedirectView addItemToCart(
+			@RequestParam(value="id") Long productId,
+			@RequestParam(value= "quantity") int quantity
 	) throws ProductNotFoundException {
 		
 		Optional<Product> product = productRepo.findById(productId);
 		
 		if (product.isPresent()) {
-			cartRepo.save(new CartItem(product.get(), qty, Status.WIP));
-			return "index";
+			
+			Optional<CartItem> item = cartRepo.findByProduct(product.get());
+			
+			cartRepo.save(new CartItem(product.get(), quantity, Status.WIP));
+			return new RedirectView("cart");
 		}
 		
 		throw new ProductNotFoundException();

@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Category {
 
@@ -16,6 +18,7 @@ public class Category {
 	
 	private String name;
 	
+	@JsonIgnore
 	@OneToMany (mappedBy = "category")
 	private Collection<Product> products;
 

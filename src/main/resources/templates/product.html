@@ -5,35 +5,35 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Product Detail</title><!--  th:text="'Product:' + ${product.name}" -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-  <script src="main.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
 </head>
 <body>
-    <header>
-      <h1 th:text = "'Product: ' + ${product.name}"></h1>
-      <h2>Still, Amazon's Top Competitor... </h2>
-    </header>
-    
-    <main>
-      <h2>Products:</h2>
-      <div>
-      	<p>Placeholder Description</p>
-      	<div th:if = "${product.category}">
-        	<a th:href = "@{/category(id=${product.category.id})}"
-        		th:text = "'Back to: ' + ${product.category.name}"></a>
-		</div>
-		<div th:unless = "${product.category}">
-        	No Category
-		</div>
-      </div>
-      
-      <form method="POST" th:action="@{/addItemToCart}">
-      	Quantity: <input type="number" name="qty">
-      	<input type="hidden" th:value="${product.id}" name="id">
-      	<input type="Submit" value="Add to Cart">
-      </form>
 
-    </main>
-  
+  <div th:replace="header"></div>
+
+  <main>
+    <h2 th:text = "'Product: ' + ${product.name}"></h2>
+
+    <div>
+      <p th:text="${product.description}"></p>
+      <div th:if = "${product.category}">
+        <a th:href = "@{/category(id=${product.category.id})}"
+          th:text = "'Back to: ' + ${product.category.name}"></a>
+      </div>
+      <div th:unless = "${product.category}">
+        No Category
+      </div>
+    </div>
+    
+    <form method="POST" th:action="@{/addItemToCart}">
+      Quantity: <input type="number" name="quantity">
+      <input type="hidden" th:value="${product.id}" name="id">
+      <input type="Submit" value="Add to Cart">
+    </form>
+
+  </main>
+
+  <div th:replace="footer"></div>
+
 </body>
 </html>

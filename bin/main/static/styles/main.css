@@ -1,0 +1,73 @@
+:root {
+  font-size: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+header {
+  background: #333;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 5em;
+  padding: 1rem;
+}
+
+header a {
+  color: lime;
+  text-decoration: none;
+}
+
+header a:hover {
+  color: white;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.2em;
+}
+
+header #cartIcon {
+  text-align: right;
+}
+
+main {
+  margin: 1rem;
+  min-height: 70vh;
+}
+
+main ul {
+  margin-left: 2rem;
+}
+
+.itemGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1rem;
+  margin: 1rem 0;
+}
+
+.itemGrid > div {
+  background: #eee;
+  border-radius: 5px;
+  box-shadow: 0 0 0 2px #ddd;
+  padding: 1rem;
+}
+
+footer {
+  border-top: 2px solid #666;
+  padding: 1rem;
+  background: #eee;
+  color: #222;
+  min-height: 20vh;
+}

@@ -5,23 +5,24 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Category</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-  <script src="main.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
 </head>
 <body>
-    <header>
-      <h1 th:text = "'Category: ' + ${category.name}"></h1>
-      <h2>Still, Amazon's Top Competitor... </h2>
-    </header>
+  <div th:replace="header"></div>
     
-    <main>
-      <h2>Products:</h2>
-      <div th:each = "product:${category.products}">
-        <a th:href = "@{/product(id=${product.id})}"
-        th:text = "${product.name}"></a>
+  <main>
+    <h2>Products in our <span th:text = "${category.name}"></span> Department</h2>
+    <section class="itemGrid">
+        <div th:each="product:${category.products}">
+          <strong>
+            <a th:href = "@{/product(id=${product.id})}"
+              th:text = "${product.name}"></a>
+        </strong>
       </div>
+    </section>
+  </main>
 
-    </main>
+  <div th:replace="footer"></div>
   
 </body>
 </html>

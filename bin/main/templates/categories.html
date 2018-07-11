@@ -3,26 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Category</title>
+  <title>Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
 </head>
 <body>
   <div th:replace="header"></div>
-    
+
   <main>
-    <h2>Products in our <span th:text = "${category.name}"></span> Department</h2>
+    <h2>All Product Categories</h2>
     <section class="itemGrid">
-        <div th:each="product:${category.products}">
+      <div th:each="category : ${categories}">
           <strong>
-            <a th:href = "@{/product(id=${product.id})}"
-              th:text = "${product.name}"></a>
-        </strong>
+            <a th:href="@{/category(id = ${category.id})}"
+            th:text="${category.name}"></a>
+          </strong>
       </div>
     </section>
-  </main>
 
-  <div th:replace="footer"></div>
+  </main>
   
+  <div th:replace="footer"></div>
 </body>
 </html>

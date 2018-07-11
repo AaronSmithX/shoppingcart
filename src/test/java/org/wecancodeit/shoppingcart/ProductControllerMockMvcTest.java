@@ -100,9 +100,20 @@ public class ProductControllerMockMvcTest {
 	public void shouldAddItemToCart() throws Exception {
 		long arbitraryProductId = 1;
 		when(productRepo.findById(arbitraryProductId)).thenReturn(Optional.of(product));
-		mvc.perform(post("/addItemToCart?id=1&qty=2")).andExpect(status().isOk());
+		mvc.perform(post("/addItemToCart?id=1&quantity=2")).andExpect(status().is3xxRedirection());
 	}
 	
+	
+	// Cart
+	@Test
+	public void shouldRouteToCart() throws Exception{
+		mvc.perform(get("/")).andExpect(view().name(is("index")));
+	}
+	
+	@Test
+	public void shouldBeOkForCart() throws Exception {
+		mvc.perform(get("/cart")).andExpect(status().isOk());
+	}
 	
 	
 }
