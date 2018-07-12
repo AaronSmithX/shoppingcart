@@ -37,6 +37,13 @@ h2 {
   font-size: 1.2em;
 }
 
+
+@media screen and (max-width: 400px) {
+  header h2 {
+    display: none;
+  }
+}
+
 header #cartIcon {
   text-align: right;
 }
@@ -46,8 +53,46 @@ main {
   min-height: 70vh;
 }
 
+.flex-separate {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 main ul {
   margin-left: 2rem;
+}
+
+#productInfo {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+}
+
+#productInfo h2 {
+  /**/
+}
+
+#productInfo p {
+  margin-top: 1rem;
+}
+
+#addProduct {
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  background: #eee;
+  padding: 0.25rem;
+  margin: 1rem 0;
+}
+
+#addProduct input {
+  border: 1px solid #333;
+  border-radius: 0.1rem;
+  padding: 0.2rem 0.5rem;
+}
+
+#addProduct input[type="number"] {
+  width: 5rem;
 }
 
 .itemGrid {
@@ -62,6 +107,37 @@ main ul {
   border-radius: 5px;
   box-shadow: 0 0 0 2px #ddd;
   padding: 1rem;
+}
+
+@media screen and (max-width: 650px) {
+  .itemGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .itemGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cartItem {
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
+}
+
+.cartItem h3 {
+  color: #333;
+}
+
+.cartItem h4 {
+  color: #aaa;
+}
+
+.cartItem a {
+  text-decoration: none;
 }
 
 footer {

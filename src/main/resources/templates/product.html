@@ -12,21 +12,25 @@
   <div th:replace="header"></div>
 
   <main>
-    <h2 th:text = "'Product: ' + ${product.name}"></h2>
+    <div class="flex-separate">
+        <div th:unless = "${product.category}">
+          <!-- // -->
+        </div>
+        <div th:if = "${product.category}">
+          <a th:href = "@{/category(id=${product.category.id})}"
+            th:text = "'See Other ' + ${product.category.name} + ' Items'"></a>
+        </div>
 
-    <div>
+        <a th:href="@{/}">All Departments</a>
+    </div>
+
+    <div id="productInfo">
+      <h2 th:text = "${product.name}"></h2>
       <p th:text="${product.description}"></p>
-      <div th:if = "${product.category}">
-        <a th:href = "@{/category(id=${product.category.id})}"
-          th:text = "'Back to: ' + ${product.category.name}"></a>
-      </div>
-      <div th:unless = "${product.category}">
-        No Category
-      </div>
     </div>
     
-    <form method="POST" th:action="@{/addItemToCart}">
-      Quantity: <input type="number" name="quantity">
+    <form method="POST" th:action="@{/addItemToCart}" id="addProduct">
+      Quantity: <input type="number" name="quantity" value="1">
       <input type="hidden" th:value="${product.id}" name="id">
       <input type="Submit" value="Add to Cart">
     </form>

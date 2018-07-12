@@ -9,9 +9,12 @@
 </head>
 <body>
   <div th:replace="header"></div>
-    
+  
   <main>
-    <h2>Products in our <span th:text = "${category.name}"></span> Department</h2>
+    <div class="flex-separate">
+      <h2>Products in our <span th:text = "${category.name}"></span> Department</h2>
+      <a th:href="@{/}">All Departments</a>
+    </div>
     <section class="itemGrid">
         <div th:each="product:${category.products}">
           <strong>

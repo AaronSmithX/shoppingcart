@@ -34,20 +34,35 @@
 
     const cartDiv = document.querySelector('#cart');
 
-    let html = '';
     cartItems.forEach(item => {
 
-      html += `
-      <div style="padding: 1rem; border: 1px solid black;">
-        <h3>${item.product.name}</h3
-        <h4>${item.product.category.name}</h4>
-        <div>
-          <strong>Quantity: </strong> ${item.quantity}
-        </div>
-      </div>`;
+      const productHref = '/product?id=' + item.product.id;
+      const categoryHref = '/category?id=' + item.product.category.id;
+
+      const itemDiv = document.createElement('div');
+      itemDiv.classList.add('cartItem');
+
+      const productNameA = document.createElement('a');
+      productNameA.setAttribute('href', productHref);
+      const productNameH3 = document.createElement('h3');
+      productNameH3.innerHTML = item.product.name;
+      productNameA.appendChild(productNameH3);
+      itemDiv.appendChild(productNameA);
+
+      const productCategoryA = document.createElement('a');
+      productCategoryA.setAttribute('href', productHref);
+      const productCategoryH4 = document.createElement('h4');
+      productCategoryH4.innerHTML = item.product.category.name;
+      productCategoryA.appendChild(productCategoryH4);
+      itemDiv.appendChild(productCategoryA);
+
+      const quantityDiv = document.createElement('div');
+      quantityDiv.innerHTML = 'Quantity: ' + item.quantity;
+      itemDiv.appendChild(quantityDiv);
+      
+      cartDiv.appendChild(itemDiv);
     });
 
-    cartDiv.innerHTML = html;
   }
 
 })();
