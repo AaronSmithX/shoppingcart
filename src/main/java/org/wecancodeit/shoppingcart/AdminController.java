@@ -19,6 +19,11 @@ public class AdminController {
 	@Resource
 	CartItemRepository cartRepo;
 	
+	// This route is an example of how to mock role-based authorization
+	// To experience the page as an admin, add "?role=admin" to the end of the URL
+	// To experience the page as a regular user, add any other role
+	// The idea is that only admins can use this page to perform administrative tasks
+	// This might include adding new products or marking products on sale or out of stock
 	@RequestMapping("/admin")
 	public String adminPanel(
 			@RequestParam(name = "role", required = false, defaultValue = "customer") String role,

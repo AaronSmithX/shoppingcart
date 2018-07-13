@@ -43,14 +43,14 @@ public class CartItemRestControllerTest {
 		assertThat(status, is(HttpStatus.OK));
 	}
 
-	@Test
-	public void shouldBeOkForUpdateItemSetQuantity() {
-		restTemplate.put("/cart/updateItem/1/setQuantity/1", null);
-	}
+//	@Test
+//	public void shouldBeOkForUpdateItemSetQuantity() {
+//		restTemplate.put("/cart/updateItem/1/setQuantity/1", null);
+//	}
 
-	@Test
-	public void shouldBeOkForRemoveItem() {
-		restTemplate.delete("/cart/removeItem/1");
-	}
+//	@Test
+//	public void shouldBeOkForRemoveItem() {
+//		restTemplate.delete("/cart/removeItem/1");
+//	}
 
 }
