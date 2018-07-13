@@ -30,3 +30,4 @@ This app uses the following technologies:
 1. Allow users to view previous orders
 1. Display recently purchased items as suggestions on the cart page so users can add those items from that page right before they place their orders
 1. Add multiple images to represent each Product, with the ability to rotate through them on the product page
+1. Add Category and Product CRUD forms for admins (/admin)
