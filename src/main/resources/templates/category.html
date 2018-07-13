@@ -8,24 +8,25 @@
   <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
 </head>
 <body>
-  <div th:replace="header"></div>
-  
-  <main>
-    <div class="flex-separate">
-      <h2>Products in our <span th:text = "${category.name}"></span> Department</h2>
-      <a th:href="@{/}">All Departments</a>
-    </div>
-    <section class="itemGrid">
-        <div th:each="product:${category.products}">
-          <strong>
-            <a th:href = "@{/product(id=${product.id})}"
-              th:text = "${product.name}"></a>
-        </strong>
+  <div class="container">
+    <div th:replace="header"></div>
+    
+    <main>
+      <div class="flex-separate">
+        <h2><span th:text = "${category.name}"></span> Products</h2>
+        <a th:href="@{/}">All Products</a>
       </div>
-    </section>
-  </main>
+      <section class="itemGrid">
+          <div th:each="product:${category.products}">
+            <strong>
+              <a th:href = "@{/product(id=${product.id})}"
+                th:text = "${product.name}"></a>
+          </strong>
+        </div>
+      </section>
+    </main>
 
-  <div th:replace="footer"></div>
-  
+    <div th:replace="footer"></div>
+  </div>
 </body>
 </html>

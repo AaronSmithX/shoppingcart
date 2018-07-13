@@ -9,6 +9,19 @@
   font-family: sans-serif;
 }
 
+/* body {
+  background: #efefef;
+} */
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px #000, /* solid outline shadow on top */
+    0 0 80px #aaa; /* grey blurry shadow behind it*/
+}
+
 header {
   background: #333;
   color: #fff;
@@ -180,7 +193,8 @@ main ul {
 footer {
   border-top: 2px solid #666;
   padding: 1rem;
-  background: #eee;
+  background: #ddd;
   color: #222;
   min-height: 20vh;
+  text-align: right;
 }

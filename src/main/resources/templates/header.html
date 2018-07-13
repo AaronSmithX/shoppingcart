@@ -8,6 +8,13 @@
 
   <div id="cartIcon">
     <a th:href="@{/cart}">Shopping Cart</a>
-    <div id="cartItemCount">Loading</div>
+    <div id="cartItemCount">
+      &nbsp;
+      <!--
+        this element is managed by cart.js
+        the non-breaking space keeps the <div>
+        from flickering when content is added
+      -->
+    </div>
   </div>
 </header>

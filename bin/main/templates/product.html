@@ -8,41 +8,41 @@
   <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
 </head>
 <body>
+  <div class="container">
+    <div th:replace="header"></div>
 
-  <div th:replace="header"></div>
+    <main>
+      <div class="flex-separate">
+          <div th:unless = "${product.category}">
+            <!-- // -->
+          </div>
+          <div th:if = "${product.category}">
+            <a th:href = "@{/category(id=${product.category.id})}"
+              th:text = "'Other ' + ${product.category.name} + ' Products'"></a>
+          </div>
 
-  <main>
-    <div class="flex-separate">
-        <div th:unless = "${product.category}">
-          <!-- // -->
-        </div>
-        <div th:if = "${product.category}">
-          <a th:href = "@{/category(id=${product.category.id})}"
-            th:text = "'See Other ' + ${product.category.name} + ' Items'"></a>
-        </div>
-
-        <a th:href="@{/}">All Departments</a>
-    </div>
-
-    <div id="productInfo">
-      <h2 th:text = "${product.name}"></h2>
-      <p th:text="${product.description}"></p>
-    </div>
-    
-    <form method="POST" th:action="@{/addItemToCart}" id="addProduct" class="flex-separate">
-      <div>
-        Quantity: <input type="number" name="quantity" value="1">
-        <input type="hidden" th:value="${product.id}" name="id">
-        <input type="Submit" value="Add to Cart">
+          <a th:href="@{/}">All Products</a>
       </div>
-      <div>
-        In Cart: <span th:text="${quantity}"></span>
+
+      <div id="productInfo">
+        <h2 th:text = "${product.name}"></h2>
+        <p th:text="${product.description}"></p>
       </div>
-    </form>
+      
+      <form method="POST" th:action="@{/addItemToCart}" id="addProduct" class="flex-separate">
+        <div>
+          Quantity: <input type="number" name="quantity" value="1">
+          <input type="hidden" th:value="${product.id}" name="id">
+          <input type="Submit" value="Add to Cart">
+        </div>
+        <div>
+          In Cart: <span th:text="${quantity}"></span>
+        </div>
+      </form>
 
-  </main>
+    </main>
 
-  <div th:replace="footer"></div>
-
+    <div th:replace="footer"></div>
+  </div>
 </body>
 </html>

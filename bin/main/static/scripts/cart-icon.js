@@ -9,13 +9,11 @@
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        const cartItems = JSON.parse(xhr.responseText);
-        cartItemCount = 0;
-        cartItems.forEach(item => cartItemCount += item.quantity)
+        cartItemCount = this.responseText;
         render();
       }
     };
-    xhr.open('GET', '/cart/items');
+    xhr.open('GET', '/cart/itemCount');
     xhr.send();
   }
 

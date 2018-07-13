@@ -25,5 +25,16 @@ public interface CartItemRepository extends CrudRepository<CartItem, Long> {
 		
 		return item.getQuantity();
 	}
+	
+	default int getTotalItemsInCart() {
+		Iterable <CartItem> items = this.findAll();
+		int totalItemCount = 0;
+		
+		for (CartItem item : items) {
+			totalItemCount += item.getQuantity();
+		}
+		
+		return totalItemCount;
+	}
 
 }

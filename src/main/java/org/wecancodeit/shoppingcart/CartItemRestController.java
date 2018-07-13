@@ -28,6 +28,11 @@ public class CartItemRestController {
 		return cartRepo.findAll();
 	}
 
+	@GetMapping("/itemQuantity")
+	public int getCartItemQuantity() {
+		return cartRepo.getTotalItemsInCart();
+	}
+
 	@PostMapping("/addProduct/{id}/inQuantity/{quantity}")
 	public Iterable<CartItem> addProductInQuantity(
 		@PathVariable("id") long productId,

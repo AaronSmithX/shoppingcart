@@ -8,21 +8,23 @@
   <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
 </head>
 <body>
-  <div th:replace="header"></div>
+  <div class="container">
+    <div th:replace="header"></div>
 
-  <main>
-    <h2>All Departments</h2>
-    <section class="itemGrid">
-      <div th:each="category : ${categories}">
-          <strong>
-            <a th:href="@{/category(id = ${category.id})}"
-            th:text="${category.name}"></a>
-          </strong>
-      </div>
-    </section>
+    <main>
+      <h2>All Products</h2>
+      <section class="itemGrid">
+        <div th:each="category : ${categories}">
+            <strong>
+              <a th:href="@{/category(id = ${category.id})}"
+              th:text="${category.name}"></a>
+            </strong>
+        </div>
+      </section>
 
-  </main>
-  
-  <div th:replace="footer"></div>
+    </main>
+    
+    <div th:replace="footer"></div>
+  </div>
 </body>
 </html>

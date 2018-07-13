@@ -8,10 +8,14 @@
   <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
 </head>
 <body>
+  <div class="container">
     <div th:replace="header"></div>
 
     <main>
-      <h2>Shopping Cart</h2>
+      <div class="flex-separate">
+          <h2>Shopping Cart</h2>
+          <a th:href="@{/}">Continue Shopping</a>
+        </div>
       
       <div id="cart"></div>
     </main>
@@ -19,6 +23,6 @@
     <div th:replace="footer"></div>
 
     <script src="./scripts/cart.js"></script>
-
+  </div>
 </body>
 </html>
