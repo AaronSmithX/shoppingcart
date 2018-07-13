@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,13 +45,12 @@ public class CartItemRestController {
 		
 		return cartRepo.findAll();
 	}
-
-	@PutMapping("/updateItem/{id}/setQuantity/{quantity}")
+	
+	@PutMapping("/updateItem")
 	public Iterable<CartItem> updateItemSetQuantity(
-		@PathVariable("id") long id,
-		@PathVariable("quantity") int quantity
+		@RequestBody CartItemUpdateRequest cartItemUpdate
 	) {
-		Optional<CartItem> itemOptional = cartRepo.findById(id);
+		Optional<CartItem> itemOptional = cartRepo.findById(cartItemUpdate.id);
 		
 		// If this item doesn't exist, do nothing
 		if (!itemOptional.isPresent()) {
@@ -59,20 +59,20 @@ public class CartItemRestController {
 		}
 		
 		CartItem item = itemOptional.get();
-		item.setQuantity(quantity);
+		item.setQuantity(cartItemUpdate.quantity);
 		cartRepo.save(item);
 		
 		return cartRepo.findAll();
 	}
 	
-//	@DeleteMapping("/removeItem/{id}")
-//	public Iterable<CartItem> removeItem(@PathVariable("id") long id) {
-//		try {
-//			cartRepo.deleteById(id);
-//		} catch (Exception e) {
-//			// TODO: Report Error (if item didn't exist)
-//		}
-//		return cartRepo.findAll();
-//	}
+	@DeleteMapping("/removeItem/{id}")
+	public Iterable<CartItem> removeItem(@PathVariable("id") long id) {
+		try {
+			cartRepo.deleteById(id);
+		} catch (Exception e) {
+			// TODO: Report Error (if item didn't exist)
+		}
+		return cartRepo.findAll();
+	}
 
 }

@@ -40,7 +40,7 @@ public class ProductController {
 	public String findOneCategory(@RequestParam(value="id")Long categoryId, Model model) throws CategoryNotFoundException {
 		Optional<Category> category = categoryRepo.findById(categoryId);
 		
-		if(category.isPresent()) {
+		if (category.isPresent()) {
 			model.addAttribute("category", category.get());
 			return "category";
 		}
@@ -51,8 +51,17 @@ public class ProductController {
 	public String findOneProduct(@RequestParam(value="id")Long productId, Model model) throws ProductNotFoundException {
 		Optional<Product> product = productRepo.findById(productId);
 		
-		if(product.isPresent()) {
+		if (product.isPresent()) {
 			model.addAttribute("product", product.get());
+			
+			Optional<CartItem> cartItem = cartRepo.findByProduct(product.get());
+			if (cartItem.isPresent()) {
+				model.addAttribute("quantity", cartItem.get().getQuantity());
+			}
+			else {
+				model.addAttribute("quantity", 0);
+			}
+			
 			return "product";
 		}
 		throw new ProductNotFoundException();

@@ -126,6 +126,9 @@ main ul {
   border-radius: 0.5rem;
   margin: 0.5rem 0;
   padding: 0.5rem 1rem;
+
+  /* so button is positioned according to this element */
+  position: relative;
 }
 
 .cartItem h3 {
@@ -138,6 +141,40 @@ main ul {
 
 .cartItem a {
   text-decoration: none;
+}
+
+.cartItem a:hover {
+  text-decoration: underline;
+}
+
+.cartItem button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+
+  color: orange;
+  background: white;
+  border: 1px solid orange;
+  border-radius: 0.2rem;
+  padding: 0 0.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cartItem button:hover {
+  color: white;
+  background: orange;
+}
+
+.cartItem .changeQuantity {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+
+  color: #09f;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 footer {

@@ -16,12 +16,36 @@
     xhr.send();
   }
 
-  function addProduct(productId, quantity) {
-    //
-  }
+  /**
+   * TODO: We could allow people to add last minute items
+   * to the cart that they have ordered before.
+   */
+  function addProduct(productId, quantity) { }
 
   function updateItem(itemId, quantity) {
-    //
+
+    const cartItemUpdate = JSON.stringify({
+      id: itemId,
+      quantity,
+    });
+
+    // Send the AJAX request to update the item in the cart
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // When finished, update items and re-render
+        cartItems = JSON.parse(xhr.responseText);
+        render();
+      }
+    };
+    xhr.open('PUT', '/cart/updateItem');
+    // Set a header so the server recognizes the data we send as JSON
+    // otherwise it will think we are just sending plain text
+    xhr.setRequestHeader(
+      'Content-Type',
+      'application/json;charset=UTF-8'
+    );
+    xhr.send(cartItemUpdate);
   }
 
   function removeItem(itemId) {
@@ -36,8 +60,8 @@
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        // When finished, remove item and re-render
-        cartItems = cartItems.filter(item => item.id !== itemId);
+        // When finished, update items and re-render
+        cartItems = JSON.parse(xhr.responseText);
         render();
       }
     };
@@ -47,6 +71,7 @@
 
   function render() {
 
+    // Testing
     console.log({ cartItems });
 
     // Get container and clear it
@@ -93,6 +118,32 @@
       quantityDiv.innerHTML = 'Quantity: ' + item.quantity;
       itemDiv.appendChild(quantityDiv);
       
+      // 'Change Quantity' Item
+      const changeQuantity = document.createElement('span');
+      changeQuantity.classList.add('changeQuantity');
+      changeQuantity.innerHTML = 'Change Quantity';
+      changeQuantity.addEventListener('click', function() {
+
+        // Get string input from the user
+        const userInput = prompt(
+          `How many ${item.product.name}s would you like instead?`
+        );
+        // Turn the string into a number (or `NaN` otherwise)
+        const userInputNumber = +userInput;
+
+        if (!Number.isInteger(userInputNumber)) {
+          alert('You must specify a number.');
+        }
+        else if (userInputNumber === item.quantity) {
+          alert('No changes will be made then.');
+        }
+        else {
+          updateItem(item.id, userInputNumber);
+        }
+
+      });
+      itemDiv.appendChild(changeQuantity);
+      
       // 'X' Button: <button> when clicked removes item
       const itemRemoveButton = document.createElement('button');
       itemRemoveButton.innerHTML = '&times;';
@@ -103,6 +154,15 @@
 
       // Append to the DOM *LAST* so the window only has to re-draw once
       cartDiv.appendChild(itemDiv);
+
+      // Finally, update the number of items in the cart as displayed
+      // in the corner of the page (NOT the number of cartItems, but
+      // the sum of each cartItem's quantity)
+      const cartItemCountSpan = document.querySelector('#cartItemCount');
+      let cartItemCount = 0;
+      cartItems.forEach(item => cartItemCount += item.quantity);
+      cartItemCountSpan.innerHTML = 'Items: ' + cartItemCount;
+  
     });
   }
 
