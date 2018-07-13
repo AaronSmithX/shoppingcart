@@ -4,7 +4,11 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,12 +22,12 @@ public class CartItemRestController {
 	@Resource
 	private ProductRepository productRepo;
 
-	@RequestMapping("/items")
+	@GetMapping("/items")
 	public Iterable<CartItem> findAllCartItems() {
 		return cartRepo.findAll();
 	}
 
-	@RequestMapping("/addProduct/{id}/inQuantity/{quantity}")
+	@PostMapping("/addProduct/{id}/inQuantity/{quantity}")
 	public Iterable<CartItem> addProductInQuantity(
 		@PathVariable("id") long productId,
 		@PathVariable("quantity") int quantity
@@ -41,7 +45,7 @@ public class CartItemRestController {
 		return cartRepo.findAll();
 	}
 
-	@RequestMapping("/updateItem/{id}/setQuantity/{quantity}")
+	@PutMapping("/updateItem/{id}/setQuantity/{quantity}")
 	public Iterable<CartItem> updateItemSetQuantity(
 		@PathVariable("id") long id,
 		@PathVariable("quantity") int quantity
@@ -61,14 +65,14 @@ public class CartItemRestController {
 		return cartRepo.findAll();
 	}
 	
-	@RequestMapping("/removeItem/{id}")
-	public Iterable<CartItem> removeItem(@PathVariable("id") long id) {
-		try {
-			cartRepo.deleteById(id);
-		} catch (Exception e) {
-			// TODO: Report Error (if item didn't exist)
-		}
-		return cartRepo.findAll();
-	}
+//	@DeleteMapping("/removeItem/{id}")
+//	public Iterable<CartItem> removeItem(@PathVariable("id") long id) {
+//		try {
+//			cartRepo.deleteById(id);
+//		} catch (Exception e) {
+//			// TODO: Report Error (if item didn't exist)
+//		}
+//		return cartRepo.findAll();
+//	}
 
 }

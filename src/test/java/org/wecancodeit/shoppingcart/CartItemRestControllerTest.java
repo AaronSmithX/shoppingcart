@@ -3,6 +3,8 @@ package org.wecancodeit.shoppingcart;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.net.URI;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -11,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -34,23 +38,19 @@ public class CartItemRestControllerTest {
 
 	@Test
 	public void shouldBeOkForAddProductInQuantity() {
-		ResponseEntity<String> response = restTemplate.getForEntity("/cart/addProduct/1/inQuantity/2", String.class);
+		ResponseEntity<String> response = restTemplate.postForEntity("/cart/addProduct/1/inQuantity/2", null, String.class);
 		HttpStatus status = response.getStatusCode();
 		assertThat(status, is(HttpStatus.OK));
 	}
 
 	@Test
 	public void shouldBeOkForUpdateItemSetQuantity() {
-		ResponseEntity<String> response = restTemplate.getForEntity("/cart/updateItem/1/setQuantity/1", String.class);
-		HttpStatus status = response.getStatusCode();
-		assertThat(status, is(HttpStatus.OK));
+		restTemplate.put("/cart/updateItem/1/setQuantity/1", null);
 	}
 
 	@Test
 	public void shouldBeOkForRemoveItem() {
-		ResponseEntity<String> response = restTemplate.getForEntity("/cart/removeItem/1", String.class);
-		HttpStatus status = response.getStatusCode();
-		assertThat(status, is(HttpStatus.OK));
+		restTemplate.delete("/cart/removeItem/1");
 	}
 
 }

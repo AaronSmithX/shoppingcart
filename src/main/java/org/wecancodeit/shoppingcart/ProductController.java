@@ -67,10 +67,7 @@ public class ProductController {
 		Optional<Product> product = productRepo.findById(productId);
 		
 		if (product.isPresent()) {
-			
-			Optional<CartItem> item = cartRepo.findByProduct(product.get());
-			
-			cartRepo.save(new CartItem(product.get(), quantity, Status.WIP));
+			cartRepo.addItemInQuantity(product.get(), quantity);
 			return new RedirectView("cart");
 		}
 		
