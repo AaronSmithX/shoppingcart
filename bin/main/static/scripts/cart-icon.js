@@ -13,7 +13,7 @@
         render();
       }
     };
-    xhr.open('GET', '/cart/itemCount');
+    xhr.open('GET', '/cart/itemQuantity');
     xhr.send();
   }
 
