@@ -19,6 +19,7 @@ public class Product {
 	private long id;
 	
 	private String name;
+	private String imageUrl;
 	
 	@Lob
 	private String description;
@@ -36,6 +37,10 @@ public class Product {
 	
 	public String getName() {
 		return name;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
 	}
 	
 	public Category getCategory() {
@@ -60,10 +65,11 @@ public class Product {
 		this.description = "";
 	}
 
-	public Product(String name, Category category, String description) {
+	public Product(String name, Category category, String description, String imageUrl) {
 		this.name = name;
 		this.setCategory(category);
 		this.description = description;
+		this.imageUrl = imageUrl;
 	}
 
 	@Override

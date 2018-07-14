@@ -82,6 +82,19 @@ main ul {
   border: 1px solid #ccc;
 }
 
+#productInfo img {
+  float: right;
+  margin: 0 0 1rem 0.5rem;
+  max-width: 30%;
+}
+
+#productInfo::after {
+  /* clearfix for floating product image */
+  content: '';
+  clear: both;
+  display: block;
+}
+
 #productInfo h2 {
   /**/
 }
@@ -119,6 +132,17 @@ main ul {
   background: #eee;
   border-radius: 5px;
   box-shadow: 0 0 0 2px #ddd;
+  padding: 1rem;
+}
+
+.itemGrid > div img {
+  max-width: 100%;
+  background: #fff;
+  margin: 0.5rem 0;
+}
+
+.itemGrid.icons > div img {
+  /* to handle edge-to-edge icons on categories page */
   padding: 1rem;
 }
 

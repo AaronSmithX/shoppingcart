@@ -17,6 +17,7 @@ public class Category {
 	private long id;
 	
 	private String name;
+	private String imageUrl;
 	
 	@JsonIgnore
 	@OneToMany (mappedBy = "category")
@@ -28,6 +29,10 @@ public class Category {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public String getImageUrl() {
+		return imageUrl;
 	}
 	
 	public Collection<Product> getProducts() {
@@ -42,8 +47,9 @@ public class Category {
 		
 	}
 	
-	public Category(String name) {
+	public Category(String name, String imageUrl) {
 		this.name = name;
+		this.imageUrl = imageUrl;
 	}
 	
 	

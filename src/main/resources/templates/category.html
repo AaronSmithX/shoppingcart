@@ -17,11 +17,11 @@
         <a th:href="@{/}">All Products</a>
       </div>
       <section class="itemGrid">
-          <div th:each="product:${category.products}">
-            <strong>
-              <a th:href = "@{/product(id=${product.id})}"
-                th:text = "${product.name}"></a>
-          </strong>
+        <div th:each="product: ${category.products}">
+            <a th:href="@{/product(id=${product.id})}">
+              <h3 th:text="${product.name}"></h3>
+              <img th:src="@{${product.imageUrl}}" />
+            </a>
         </div>
       </section>
     </main>

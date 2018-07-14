@@ -13,13 +13,15 @@
 
     <main>
       <h2>All Products</h2>
-      <section class="itemGrid">
+      <section class="itemGrid icons">
         <div th:each="category : ${categories}">
-            <h3>
-              <a th:href="@{/category(id = ${category.id})}"
-              th:text="${category.name}"></a>
-            </h3>
-            Products: <span th:text="${category.productCount}"></span>
+            <a th:href="@{/category(id = ${category.id})}">
+              <h3 th:text="${category.name}"></h3>
+              <img th:src="@{${category.imageUrl}}" />
+            </a>
+            <div>
+              Products: <span th:text="${category.productCount}"></span>
+            </div>
         </div>
       </section>
 

@@ -46,7 +46,7 @@ public class JPAMappingsTest {
 
 	@Test
 	public void shouldSaveAndLoadCategory() {
-		Category category = categoryRepo.save(new Category("Gadgets"));
+		Category category = categoryRepo.save(new Category("Gadgets", "imageUrl"));
 		long categoryId = category.getId();
 
 		entityManager.flush();
@@ -59,7 +59,7 @@ public class JPAMappingsTest {
 
 	@Test
 	public void shouldEstablishProductCategoryRelationship() {
-		Category category = categoryRepo.save(new Category("Gadgets"));
+		Category category = categoryRepo.save(new Category("Gadgets", "imageUrl"));
 		Product product1 = productRepo.save(new Product("Widget", category));
 		Product product2 = productRepo.save(new Product("iPhone", category));
 		long categoryId = category.getId();

@@ -29,6 +29,7 @@
       </div>
 
       <div id="productInfo">
+        <img th:src="@{${product.imageUrl}}" />
         <h2 th:text = "${product.name}"></h2>
         <p th:text="${product.description}"></p>
       </div>
