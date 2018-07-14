@@ -14,7 +14,11 @@
     <main>
       <div class="flex-separate">
           <div th:unless = "${product.category}">
-            <!-- // -->
+            <!--
+              empty <div> so no matter what, this th:if/th:unless
+              combination produces a single <div>, which will be
+              positioned on the left side of the parent flexbox
+            -->
           </div>
           <div th:if = "${product.category}">
             <a th:href = "@{/category(id=${product.category.id})}"

@@ -21,7 +21,6 @@ This app uses the following technologies:
 ## Potential Improvements and Extensions
 
 1. Fully test the REST API, both client-side and server-side
-1. Display the number of Products in each category on the categories page
 1. Add an image to represent each Product
 1. Add an image to represent each Category
 1. Add a price to each Product

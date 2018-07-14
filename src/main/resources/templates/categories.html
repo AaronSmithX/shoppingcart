@@ -15,10 +15,11 @@
       <h2>All Products</h2>
       <section class="itemGrid">
         <div th:each="category : ${categories}">
-            <strong>
+            <h3>
               <a th:href="@{/category(id = ${category.id})}"
               th:text="${category.name}"></a>
-            </strong>
+            </h3>
+            Products: <span th:text="${category.productCount}"></span>
         </div>
       </section>
 

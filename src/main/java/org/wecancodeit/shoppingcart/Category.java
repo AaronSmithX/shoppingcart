@@ -34,6 +34,10 @@ public class Category {
 		return products;
 	}
 	
+	public int getProductCount() {
+		return this.getProducts().size();
+	}
+	
 	protected Category() {
 		
 	}
