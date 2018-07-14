@@ -141,10 +141,20 @@ main ul {
   margin: 0.5rem 0;
 }
 
-.itemGrid.icons > div img {
+.itemGrid.categories > div img {
   /* to handle edge-to-edge icons on categories page */
   padding: 1rem;
 }
+
+.itemGrid.products a {
+  text-decoration: none;
+}
+
+.price {
+  color: darkorange;
+  font-weight: bold;
+}
+
 
 @media screen and (max-width: 650px) {
   .itemGrid {

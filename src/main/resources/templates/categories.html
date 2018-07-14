@@ -13,7 +13,7 @@
 
     <main>
       <h2>All Products</h2>
-      <section class="itemGrid icons">
+      <section class="itemGrid categories">
         <div th:each="category : ${categories}">
             <a th:href="@{/category(id = ${category.id})}">
               <h3 th:text="${category.name}"></h3>

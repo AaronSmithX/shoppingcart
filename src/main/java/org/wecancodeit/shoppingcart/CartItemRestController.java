@@ -64,8 +64,14 @@ public class CartItemRestController {
 		}
 		
 		CartItem item = itemOptional.get();
-		item.setQuantity(cartItemUpdate.quantity);
-		cartRepo.save(item);
+		
+		if (cartItemUpdate.quantity == 0) {
+			cartRepo.delete(item);
+		}
+		else {
+			item.setQuantity(cartItemUpdate.quantity);
+			cartRepo.save(item);
+		}
 		
 		return cartRepo.findAll();
 	}

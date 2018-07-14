@@ -1,5 +1,6 @@
 package org.wecancodeit.shoppingcart;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ public class Product {
 	
 	private String name;
 	private String imageUrl;
+	private BigDecimal price;
 	
 	@Lob
 	private String description;
@@ -47,6 +49,10 @@ public class Product {
 		return category;
 	}
 	
+	public BigDecimal getPrice() {
+		return price;
+	}
+	
 	public String getDescription() {
 		return description;
 	}
@@ -63,13 +69,15 @@ public class Product {
 		this.name = name;
 		this.setCategory(category);
 		this.description = "";
+		this.price = new BigDecimal(0.00);
 	}
 
-	public Product(String name, Category category, String description, String imageUrl) {
+	public Product(String name, Category category, String description, String imageUrl, BigDecimal price) {
 		this.name = name;
 		this.setCategory(category);
 		this.description = description;
 		this.imageUrl = imageUrl;
+		this.price = price;
 	}
 
 	@Override

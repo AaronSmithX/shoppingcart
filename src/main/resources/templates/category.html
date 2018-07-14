@@ -16,11 +16,12 @@
         <h2><span th:text = "${category.name}"></span> Products</h2>
         <a th:href="@{/}">All Products</a>
       </div>
-      <section class="itemGrid">
+      <section class="itemGrid products">
         <div th:each="product: ${category.products}">
             <a th:href="@{/product(id=${product.id})}">
               <h3 th:text="${product.name}"></h3>
               <img th:src="@{${product.imageUrl}}" />
+              <p class="price" th:text="'$' + ${product.price}"></p>
             </a>
         </div>
       </section>

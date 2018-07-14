@@ -131,7 +131,8 @@
         // Turn the string into a number (or `NaN` otherwise)
         const userInputNumber = +userInput;
 
-        if (!Number.isInteger(userInputNumber)) {
+        // If the user entered an empty string OR a non-integer
+        if (!userInput.length || !Number.isInteger(userInputNumber)) {
           alert('You must specify a number.');
         }
         else if (userInputNumber === item.quantity) {
@@ -154,16 +155,15 @@
 
       // Append to the DOM *LAST* so the window only has to re-draw once
       cartDiv.appendChild(itemDiv);
-
-      // Finally, update the number of items in the cart as displayed
-      // in the corner of the page (NOT the number of cartItems, but
-      // the sum of each cartItem's quantity)
-      const cartItemCountSpan = document.querySelector('#cartItemCount');
-      let cartItemCount = 0;
-      cartItems.forEach(item => cartItemCount += item.quantity);
-      cartItemCountSpan.innerHTML = 'Items: ' + cartItemCount;
-  
     });
+
+    // Finally, update the number of items in the cart as displayed
+    // in the corner of the page (NOT the number of cartItems, but
+    // the sum of each cartItem's quantity)
+    const cartItemCountSpan = document.querySelector('#cartItemCount');
+    let cartItemCount = 0;
+    cartItems.forEach(item => cartItemCount += item.quantity);
+    cartItemCountSpan.innerHTML = 'Items: ' + cartItemCount;
   }
 
 })();
