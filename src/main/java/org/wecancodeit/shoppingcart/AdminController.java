@@ -1,9 +1,13 @@
 package org.wecancodeit.shoppingcart;
 
+import java.util.Collection;
+import java.util.Optional;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,8 +40,26 @@ public class AdminController {
 			System.out.println("ERROR");
 			throw new UnauthorizedRequestException();
 		}
+		
 		System.out.println("SUCCESS");
+		
+		Iterable<Category> categories = categoryRepo.findAll();
+		model.addAttribute("categories", categories);
 
 		return "admin";
+	}
+	
+	@PostMapping("/admin/addCategory")
+	public String addCategory(@RequestParam(name = "name") String newCategoryName) throws CategoryExistsException {
+		
+		Optional<Category> existingCategory = categoryRepo.findByName(newCategoryName);
+		
+		if (existingCategory.isPresent()) {
+			throw new CategoryExistsException();
+		}
+		
+		categoryRepo.save(new Category(newCategoryName, ""));
+		
+		return "redirect:/admin?role=admin";
 	}
 }

@@ -9,6 +9,7 @@
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
         cartItems = JSON.parse(xhr.responseText);
+        console.log({ cartItems });
         render();
       }
     };
@@ -78,16 +79,15 @@
     const cartDiv = document.querySelector('#cart');
     cartDiv.innerHTML = '';
 
-    // If there are no elements, render a 'Cart is empty' message
-    if (!cartItems.length) {
-      const noItemsDiv = document.createElement('div');
-      noItemsDiv.classList.add('cartItem');
-      noItemsDiv.innerHTML = 'No items in cart.';
-      cartDiv.appendChild(noItemsDiv);
-    }
+    // Track total price of all items
+    let cartTotalInvoice = 0;
 
     // For any items in the cart, render that item
     cartItems.forEach(item => {
+
+      // Get line item subtotal, add to total invoice
+      let lineItemSubtotal = item.product.price * item.quantity;
+      cartTotalInvoice += lineItemSubtotal;
 
       // Determine URLs for item's product and category pages
       const productHref = '/product?id=' + item.product.id;
@@ -116,8 +116,9 @@
       // Item Quantity
       const quantityDiv = document.createElement('div');
       quantityDiv.innerHTML = 'Quantity: ' + item.quantity;
+      quantityDiv.innerHTML += ` ($${item.product.price.toFixed(2)} x ${item.quantity} = $${lineItemSubtotal.toFixed(2)})`;
       itemDiv.appendChild(quantityDiv);
-      
+
       // 'Change Quantity' Item
       const changeQuantity = document.createElement('span');
       changeQuantity.classList.add('changeQuantity');
@@ -156,6 +157,20 @@
       // Append to the DOM *LAST* so the window only has to re-draw once
       cartDiv.appendChild(itemDiv);
     });
+
+    // If there are no elements, render a 'Cart is empty' message
+    if (!cartItems.length) {
+      const noItemsDiv = document.createElement('div');
+      noItemsDiv.classList.add('cartItem');
+      noItemsDiv.innerHTML = 'No items in cart.';
+      cartDiv.appendChild(noItemsDiv);
+    }
+    else {
+      const totalInvoiceDiv = document.createElement('div');
+      totalInvoiceDiv.classList.add('cartItem');
+      totalInvoiceDiv.innerHTML = `Total Invoice: $${cartTotalInvoice.toFixed(2)}`;
+      cartDiv.appendChild(totalInvoiceDiv);
+    }
 
     // Finally, update the number of items in the cart as displayed
     // in the corner of the page (NOT the number of cartItems, but

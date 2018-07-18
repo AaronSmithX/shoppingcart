@@ -12,7 +12,23 @@
     <div th:replace="header"></div>
 
     <main>
-      ADMIN PANEL
+      
+		<form th:action="@{/admin/addCategory}" method="POST">
+			<h2>New Category</h2>
+			<input type="text" name="name" placeholder="Category Name" />
+			<input type="submit" value="Create Category" />
+		</form>
+		
+		<section>
+			<h2>Categories</h2>
+			<ul>
+				<li th:each="category : ${categories}">
+					<a th:href="@{/category(id=${category.id})}" th:text="${category.name}"></a>
+				</li>
+				<li th:if="${categories.size() == 0}">No Categories</li>
+			</ul>
+		</section>
+		
     </main>
   
     <div th:replace="footer"></div>

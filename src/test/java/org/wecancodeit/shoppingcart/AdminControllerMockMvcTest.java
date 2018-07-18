@@ -1,9 +1,13 @@
 package org.wecancodeit.shoppingcart;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+import java.util.Optional;
 
 import javax.annotation.Resource;
 
@@ -57,4 +61,21 @@ public class AdminControllerMockMvcTest {
 	}
 	
 	// Admin Controls
+	@Test
+	public void shouldBe3xxForAdminAddCategory() throws Exception {
+		mvc.perform(post("/admin/addCategory?name=NewCategory"))
+			.andExpect(status().is3xxRedirection());
+	}
+	
+	@Test
+	public void shouldBe4xxForAdminAddCategoryIfExists() throws Exception {
+		String newCategoryName = "New Category";
+		when(category.getName()).thenReturn(newCategoryName);
+		when(categoryRepo.findByName(newCategoryName)).thenReturn(Optional.of(category));
+		
+		mvc.perform(post("/admin/addCategory?name=" + newCategoryName))
+			.andExpect(status().is4xxClientError());
+	}
+	
+	// TODO: test adding a new category, then re-submitting same form... expect 400
 }

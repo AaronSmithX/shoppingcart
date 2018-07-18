@@ -20,8 +20,6 @@ This app uses the following technologies:
 
 ## Potential Improvements and Extensions
 
-1. Fully test the REST API, both client-side and server-side
-1. Calculate the total price of all items in the cart
 1. Allow users to place their orders, removing them from the cart
 1. Allow users to view previous orders
 1. Display recently purchased items as suggestions on the cart page so users can add those items from that page right before they place their orders

@@ -51,7 +51,5 @@ public class Category {
 		this.name = name;
 		this.imageUrl = imageUrl;
 	}
-	
-	
 
 }
