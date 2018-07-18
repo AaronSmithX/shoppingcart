@@ -1,10 +1,13 @@
 package org.wecancodeit.shoppingcart;
 
-import java.util.Collection;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +25,9 @@ public class AdminController {
 
 	@Resource
 	CartItemRepository cartRepo;
+	
+	@Autowired
+    ServletContext context;
 	
 	// This route is an example of how to mock role-based authorization
 	// To experience the page as an admin, add "?role=admin" to the end of the URL
@@ -59,6 +65,33 @@ public class AdminController {
 		}
 		
 		categoryRepo.save(new Category(newCategoryName, ""));
+		
+		return "redirect:/admin?role=admin";
+	}
+	
+
+	@PostMapping("/admin/addProduct")
+	public String addProduct(
+		@RequestParam(name = "name") String productName,
+		@RequestParam(name = "price") float productPrice,
+		@RequestParam(name = "description") String productDescription,
+		@RequestParam(name = "categoryId") Long categoryId,
+		@RequestParam(name = "imageUrl") String imageUrl
+	) throws CategoryNotFoundException, IllegalStateException, IOException, Exception {
+		
+		Optional<Category> category = categoryRepo.findById(categoryId);
+		if (!category.isPresent()) {
+			throw new CategoryNotFoundException();
+		}
+
+		// Create and save product
+		productRepo.save(new Product(
+			productName,
+			category.get(),
+			productDescription,
+			imageUrl,
+			new BigDecimal(productPrice)
+		));
 		
 		return "redirect:/admin?role=admin";
 	}

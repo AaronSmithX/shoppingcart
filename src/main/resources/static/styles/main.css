@@ -232,3 +232,10 @@ footer {
   min-height: 20vh;
   text-align: right;
 }
+
+.pane {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0.5em;
+  margin: 0.5em 0;
+}
