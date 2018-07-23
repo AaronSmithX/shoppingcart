@@ -2,10 +2,12 @@
 
 This is an example of a full-stack web application written in Java.
 
-* Users can browse through various products, which are sorted into categories.
-* Users can add products to their shopping cart.
-* Users are able to view the items and quantities currently in their cart.
-* Users can adjust item quantities or remove items from their carts altogether on the shopping cart page via AJAX, so the page never reloads.
+* Customers can browse through various products, which are sorted into categories.
+* Customers can add products to their shopping cart. The number of items in the cart is visible on every page.
+* Customers are able to view the items and quantities currently in their cart.
+* Customers can adjust item quantities or remove items from their carts altogether on the shopping cart page via AJAX, so the page never reloads.
+* Admins can "log in" (mock authentication) using cookies.
+* Admins can create new categories and products, complete with image uploads.
 
 ## Tech Stack
 
@@ -21,12 +23,10 @@ This app uses the following technologies:
 ## Potential Improvements and Extensions
 
 1. Clean up CSS on /admin page
-1. Instead of RequestParams, mock authentication with a cookie that is easy to set/unset. Use a single method in AdminController to ensure the user is authorized, otherwise redirect the user to the login page.
 1. Allow users to place their orders, removing them from the cart
 1. Allow users to view previous orders
 1. Display recently purchased items as suggestions on the cart page so users can add those items from that page right before they place their orders
 1. Add multiple images to represent each Product, with the ability to rotate through them on the product page
-1. Add Category and Product CRUD forms for admins (/admin)
 
 ## Further Concepts to Demonstrate
 
