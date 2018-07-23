@@ -43,7 +43,10 @@ public class CustomHandlerInterceptor extends HandlerInterceptorAdapter {
 		System.out.println("Request URL: " + requestUrl + ":: Sent to Handler=" + startTime);
 		
 		if (modelAndView != null) {
-			modelAndView.addObject("interceptorMessage", "This message was defined in CustomHandlerInterceptor.java");
+			// It is POSSIBLE to add attributes to the model here, but if your controller method
+			// returns a redirect ("redirect:" string or RedirectView object), these attributes will be appended
+			// to the redirect URL as request parameters, which can be ugly, unwieldy, and unexpected
+			// modelAndView.addObject("interceptorMessage", "This message was defined in CustomHandlerInterceptor.java");
 		}
 	}
 	
