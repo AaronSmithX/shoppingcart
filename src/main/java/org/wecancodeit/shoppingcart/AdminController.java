@@ -2,23 +2,17 @@ package org.wecancodeit.shoppingcart;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
-import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,49 +34,9 @@ public class AdminController {
 	@Resource
 	CartItemRepository cartRepo;
 	
-	@Autowired
-    ServletContext context;
+	@Resource
+	ImageUploadService uploader;
 	
-	private String getUploadDirectory() {
-		// Determine where uploads should be saved
-        String userHomeDirectory = System.getProperty("user.home");
-        String uploadDirectory = Paths.get(userHomeDirectory, "spring-uploads").toString();
-        
-        // Create if needed
-        new File(uploadDirectory).mkdirs();
-        
-        // Return path
-        return uploadDirectory;
-	}
-	
-	private String getFileExtension(String fileName) {
-	    try {
-	        return fileName.substring(fileName.lastIndexOf(".") + 1);
-	    } catch (Exception e) {
-	        return "";
-	    }
-	}
-	
-	private String uploadMultipartFile(MultipartFile imageFile) throws Exception {
-		// Upload image - stream uploaded data to a temporary file
-		String fileName = imageFile.getOriginalFilename();
-		if ("".equalsIgnoreCase(fileName)) {
-			throw new Exception();
-		}
-		File tempFile = File.createTempFile(fileName, "");
-        FileOutputStream fos = new FileOutputStream(tempFile); 
-        fos.write(imageFile.getBytes());
-        fos.close(); 
-		
-        // Transfer the temporary file to its permanent location
-        String fileExtension = getFileExtension(fileName);
-        String virtualFileUrl = UUID.randomUUID().toString() + "." + fileExtension;
-		File fileUpload = new File(getUploadDirectory(), virtualFileUrl);
-		imageFile.transferTo(fileUpload);
-		
-		return virtualFileUrl;
-	}
-
 	// This route is an example of how to mock role-based authorization
 	// To experience the page as an admin, add "?role=admin" to the end of the URL
 	// To experience the page as a regular user, add any other role
@@ -121,7 +75,7 @@ public class AdminController {
 			throw new CategoryExistsException();
 		}
 		
-		String virtualFileUrl = uploadMultipartFile(imageFile);	
+		String virtualFileUrl = uploader.uploadMultipartFile(imageFile);	
 		
 		categoryRepo.save(new Category(
 			newCategoryName,
@@ -145,7 +99,7 @@ public class AdminController {
 			throw new CategoryNotFoundException();
 		}
 		
-		String virtualFileUrl = uploadMultipartFile(imageFile);
+		String virtualFileUrl = uploader.uploadMultipartFile(imageFile);
 
 		// Create and save product
 		productRepo.save(new Product(
@@ -166,12 +120,8 @@ public class AdminController {
 		@PathVariable("file") String fileName
 	) throws Exception {
 		
-		// Determine path of requested file
-		Path filePath = Paths.get(getUploadDirectory(), fileName);
-		String filePathString = filePath.toString();
-		File requestedFile = new File(filePathString);
-		
-		System.out.println(filePathString);
+		// Resolve path of requested file
+		File requestedFile = uploader.getUploadedFile(fileName);
 		
 		// Ensure requested item exists and is a file
 		if (!requestedFile.exists() || !requestedFile.isFile()) {
@@ -179,11 +129,11 @@ public class AdminController {
 		}
 		
 		// Determine and set correct content type of response
-		String fileContentType= Files.probeContentType(filePath);
+		String fileContentType= Files.probeContentType(requestedFile.toPath());
 	    response.setContentType(fileContentType);
 		
 		// Serve file by streaming it directly to the response
-		InputStream in = new FileInputStream(filePathString);		
+		InputStream in = new FileInputStream(requestedFile);		
 	    IOUtils.copy(in, response.getOutputStream());
 	}
 }
