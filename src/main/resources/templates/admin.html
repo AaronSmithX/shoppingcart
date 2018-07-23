@@ -14,6 +14,8 @@
 	<main>
 			
 		<h2>Admin Panel</h2>
+		
+		<h3 th:if="${interceptorMessage}" th:text="${interceptorMessage}"></h3>
 
 		<form class="pane" th:action="@{/admin/addCategory}" method="POST" enctype="multipart/form-data">
 			<h3>New Category</h3>

@@ -159,7 +159,7 @@ public class AdminController {
 		return "redirect:/admin?role=admin";
 	}
 	
-	@GetMapping("/uploads/{file}")
+	@GetMapping("/uploads/{file:.+}") // Special pattern to allow "." to be part of PathVariable instead of truncating it
 	public void serveImage(
 		HttpServletRequest request,
 		HttpServletResponse response,
@@ -170,6 +170,8 @@ public class AdminController {
 		Path filePath = Paths.get(getUploadDirectory(), fileName);
 		String filePathString = filePath.toString();
 		File requestedFile = new File(filePathString);
+		
+		System.out.println(filePathString);
 		
 		// Ensure requested item exists and is a file
 		if (!requestedFile.exists() || !requestedFile.isFile()) {
