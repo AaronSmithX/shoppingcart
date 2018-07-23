@@ -37,7 +37,7 @@
       
       <form method="POST" th:action="@{/addItemToCart}" id="addProduct" class="flex-separate">
         <div>
-          Quantity: <input type="number" name="quantity" value="1">
+          Quantity: <input type="number" name="quantity" value="1" min="1">
           <input type="hidden" th:value="${product.id}" name="id">
           <input type="Submit" value="Add to Cart">
         </div>

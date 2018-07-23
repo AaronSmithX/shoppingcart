@@ -15,9 +15,15 @@
 			
 		<h2>Admin Panel</h2>
 
-		<form class="pane" th:action="@{/admin/addCategory}" method="POST">
+		<form class="pane" th:action="@{/admin/addCategory}" method="POST" enctype="multipart/form-data">
 			<h3>New Category</h3>
 			<input type="text" name="name" placeholder="Category Name" />
+			<br>
+			<label>
+				Image File
+				<input type="file" name="imageFile" />
+			</label>
+			<br>
 			<input type="submit" value="Create Category" />
 		</form>
 		
@@ -48,8 +54,8 @@
 			</label>
 			<br>
 			<label>
-				Image URL
-				<input type="text" name="imageUrl" />
+				Image File
+				<input type="file" name="imageFile" />
 			</label>
 			<br>
 			<input type="submit" value="Add Product" />		

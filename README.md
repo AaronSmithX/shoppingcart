@@ -20,8 +20,16 @@ This app uses the following technologies:
 
 ## Potential Improvements and Extensions
 
+1. Clean up CSS on /admin page
+1. Instead of RequestParams, mock authentication with a cookie that is easy to set/unset. Use a single method in AdminController to ensure the user is authorized, otherwise redirect the user to the login page.
 1. Allow users to place their orders, removing them from the cart
 1. Allow users to view previous orders
 1. Display recently purchased items as suggestions on the cart page so users can add those items from that page right before they place their orders
 1. Add multiple images to represent each Product, with the ability to rotate through them on the product page
 1. Add Category and Product CRUD forms for admins (/admin)
+
+## Further Concepts to Demonstrate
+
+1. Creating and submitting FormData in JavaScript
+1. Sending data using JavaScript's `encodeURIComponent()` and template literals
+1. HTML generation using template literals
