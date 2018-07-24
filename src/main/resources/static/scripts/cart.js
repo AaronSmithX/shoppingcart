@@ -25,10 +25,10 @@
 
   function updateItem(itemId, quantity) {
 
-    const cartItemUpdate = JSON.stringify({
+    const cartItemUpdate = {
       id: itemId,
       quantity,
-    });
+    };
 
     // Send the AJAX request to update the item in the cart
     const xhr = new XMLHttpRequest();
