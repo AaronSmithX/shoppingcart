@@ -1,6 +1,5 @@
 package org.wecancodeit.shoppingcart;
 
-import java.util.Collection;
 import java.util.Optional;
 
 import javax.annotation.Resource;

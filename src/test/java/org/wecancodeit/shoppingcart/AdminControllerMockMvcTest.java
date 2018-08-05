@@ -3,14 +3,17 @@ package org.wecancodeit.shoppingcart;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.Optional;
+import java.util.Random;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -28,6 +31,9 @@ public class AdminControllerMockMvcTest {
 	private MockMvc mvc;
 	
 	@MockBean
+	private ImageUploadService imageUploadService;
+	
+	@MockBean
 	private CategoryRepository categoryRepo;
 
 	@MockBean
@@ -42,28 +48,40 @@ public class AdminControllerMockMvcTest {
 	
 	@Mock
 	private Product product;
+
+	final Cookie adminRoleCookie = new Cookie("role", "admin");
+	final Cookie customerRoleCookie = new Cookie("role", "customer");
+	byte[] mockImageData = new byte[10 * 1024];
+	
+	@Before
+	public void setup() {
+		new Random().nextBytes(mockImageData);
+	}
 	
 	// Admin Home
 	@Test
 	public void shouldRouteToAdminPanelIfAdmin() throws Exception {
-		mvc.perform(get("/admin?role=admin")).andExpect(view().name(is("admin")));
+				
+		mvc.perform(get("/admin").cookie(adminRoleCookie))
+		.andExpect(view().name(is("admin")));
 	}
 	
 	@Test
 	public void shouldBeOKForAdminPanelIfAdmin() throws Exception {
-		mvc.perform(get("/admin?role=admin")).andExpect(status().isOk()); // 200
+		mvc.perform(get("/admin").cookie(adminRoleCookie))
+		.andExpect(status().isOk()); // 200
 	}
 	
 	@Test
-	public void shouldBeUnauthorizedForAdminPanelIfNotAdmin() throws Exception {
-		mvc.perform(get("/admin")).andExpect(status().isUnauthorized()); // 401
-		mvc.perform(get("/admin?role=customer")).andExpect(status().isUnauthorized()); // 401
+	public void shouldRedirectToLoginFromAdminPanelIfNotAdmin() throws Exception {
+		mvc.perform(get("/admin")).andExpect(status().isFound()); // 302
+		mvc.perform(get("/admin").cookie(customerRoleCookie)).andExpect(status().isFound()); // 302
 	}
 	
 	// Admin Controls
 	@Test
 	public void shouldBe3xxForAdminAddCategory() throws Exception {
-		mvc.perform(post("/admin/addCategory?name=NewCategory"))
+		mvc.perform(multipart("/admin/addCategory?name=NewCategory").file("imageFile", mockImageData))
 			.andExpect(status().is3xxRedirection());
 	}
 	
@@ -73,9 +91,7 @@ public class AdminControllerMockMvcTest {
 		when(category.getName()).thenReturn(newCategoryName);
 		when(categoryRepo.findByName(newCategoryName)).thenReturn(Optional.of(category));
 		
-		mvc.perform(post("/admin/addCategory?name=" + newCategoryName))
+		mvc.perform(multipart("/admin/addCategory?name=" + newCategoryName).file("imageFile", mockImageData))
 			.andExpect(status().is4xxClientError());
 	}
-	
-	// TODO: test adding a new category, then re-submitting same form... expect 400
 }
